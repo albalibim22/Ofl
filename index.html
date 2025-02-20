@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay and Get the Link</title>
+</head>
+<body>
+    <h2>Click the button and pay €1 via PayPal</h2>
+    
+    <div id="paypal-button-container"></div>
+    
+    <div id="hidden-link" style="display: none; margin-top: 20px;">
+        <h3>Here is your link:</h3>
+        <a href="https://payme.sk/?V=1&IBAN=SK6011000000002935024939&AM=1.00&CC=EUR&DT=&PI=&MSG=&CN=" target="_blank">Download</a>
+    </div>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AX6F7RIB6ZnqML9zErB8A-HK3LwKyHmSotlAK_kezZoslm2lPIrUIaeIs1UrTVR5Zd165IV8eytbvu-r&currency=EUR"></script>
+    <script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { value: "1.00" }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    document.getElementById("hidden-link").style.display = "block";
+                });
+            }
+        }).render("#paypal-button-container");
+    </script>
+</body>
+</html>
+
+
+I've updated the link in the code. Let me know if you need any further modifications!
+
